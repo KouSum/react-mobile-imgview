@@ -16,6 +16,7 @@
  **********************************************************************************************/
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import styles from './index.css'
 import AlloyFinger from './libs/alloyfinger.js'
 import Transform from './libs/transform.js'
 import { CenterImage } from './components.js'
@@ -67,6 +68,7 @@ class ImageView extends Component {
     render() {
         const { desc, disablePageNum, children, gap } = this.props;
 
+
         return (
             <div className="imageview">
                 <AlloyFinger
@@ -76,6 +78,20 @@ class ImageView extends Component {
                     <ul ref="imagelist" className="imagelist">
                     {
                         this.props.imagelist.map((item, i) => {
+
+                            let d = item
+                            let st = [];
+                            for (let i in d) {
+                                if (d.hasOwnProperty(i)) {
+                                    if (i.indexOf('attach_') > -1) {
+                                        st.push(d[i])
+                                    }
+                                }
+                            }
+                            const cleanData = (<div className={styles.label} style={{textAlign:'left'}}><span><strong
+                                style={{color: '#000'}}>标签：</strong>{d.label_names}</span><br/><strong
+                                style={{color: '#000'}}>其他：</strong>{st.join(" | ")}</div>)
+
                             return (
                                 <li className="imagelist-item" style={{ marginRight: gap + 'px'}} key={"img"+i}>
                                     <AlloyFinger
@@ -86,8 +102,16 @@ class ImageView extends Component {
                                         onRotate={this.onRotate.bind(this)}
                                         onMultipointEnd={this.onMultipointEnd.bind(this)}
                                         onDoubleTap={this.onDoubleTap.bind(this)}>
-                                        <CenterImage id={`view${i}`} className="imagelist-item-img" lazysrc={item} index={i} current={this.state.current}/>
+                                        <CenterImage id={`view${i}`} className="imagelist-item-img" lazysrc={item.url} index={i} current={this.state.current}/>
                                     </AlloyFinger>
+                                    <div style={{
+                                        position: 'absolute',
+                                        zIndex: 9999999,
+                                        top: 50,
+                                        left: 10,
+                                        backgroundColor: '#fff'
+                                    }}>{cleanData}
+                                    </div>
                                 </li>
                             )
                         })
