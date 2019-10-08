@@ -79,18 +79,22 @@ class ImageView extends Component {
                     {
                         this.props.imagelist.map((item, i) => {
 
-                            let d = item
+                            let d =item;
                             let st = [];
-                            for (let i in d) {
-                                if (d.hasOwnProperty(i)) {
-                                    if (i.indexOf('attach_') > -1) {
-                                        st.push(d[i])
+                            for (let ii in d){
+                                if (d.hasOwnProperty(ii)){
+                                    if (ii.indexOf('attach_')>-1) {
+                                        st.push(d[ii])
                                     }
                                 }
                             }
-                            const cleanData = (<div className={styles.label} style={{textAlign:'left'}}><span><strong
-                                style={{color: '#000'}}>标签：</strong>{d.label_names}</span><br/><strong
-                                style={{color: '#000'}}>其他：</strong>{st.join(" | ")}</div>)
+                            st=st.filter(d=>d);
+                            let qt = item.label_names.split(',');
+                            window.Array.prototype.push.apply(qt,st);
+                            const cleanData = (
+                              <div className="" style={{textAlign:'left'}}>
+                                  {qt.map((item,index)=><span className="su-imagelist-item-tags" color="blue" key={index+'st'}>{item}</span>)}
+                              </div>)
 
                             return (
                                 <li className="imagelist-item" style={{ marginRight: gap + 'px'}} key={"img"+i}>
@@ -109,7 +113,9 @@ class ImageView extends Component {
                                         zIndex: 9999999,
                                         top: 50,
                                         left: 10,
-                                        backgroundColor: '#fff'
+                                        backgroundColor: '#fff',
+                                        padding:5,
+                                        borderRadius:5
                                     }}>{cleanData}
                                     </div>
                                 </li>
