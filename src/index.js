@@ -108,14 +108,15 @@ class ImageView extends Component {
                                         onDoubleTap={this.onDoubleTap.bind(this)}>
                                         <CenterImage id={`view${i}`} className="imagelist-item-img" lazysrc={item.url} index={i} current={this.state.current}/>
                                     </AlloyFinger>
-                                    <div style={{
+                                    <div className="su-imagelist-item-tags-div" style={{
                                         position: 'absolute',
                                         zIndex: 9999999,
                                         top: 50,
                                         left: 10,
                                         backgroundColor: '#fff',
                                         padding:5,
-                                        borderRadius:5
+                                        borderRadius:5,
+                                        opacity: 0.6
                                     }}>{cleanData}
                                     </div>
                                 </li>
