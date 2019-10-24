@@ -78,24 +78,7 @@ class ImageView extends Component {
                     <ul ref="imagelist" className="imagelist">
                     {
                         this.props.imagelist.map((item, i) => {
-
-                            let d =item;
-                            let st = [];
-                            for (let ii in d){
-                                if (d.hasOwnProperty(ii)){
-                                    if (ii.indexOf('attach_')>-1) {
-                                        st.push(d[ii])
-                                    }
-                                }
-                            }
-                            st=st.filter(d=>d);
-                            let qt = item.label_names.split(',');
-                            window.Array.prototype.push.apply(qt,st);
-                            const cleanData = (
-                              <div className="" style={{textAlign:'left'}}>
-                                  {qt.map((item,index)=><span className="su-imagelist-item-tags" color="blue" key={index+'st'}>{item}</span>)}
-                              </div>)
-
+                            const labelsData = this.props.cleanData? this.props.cleanData(item):null
                             return (
                                 <li className="imagelist-item" style={{ marginRight: gap + 'px'}} key={"img"+i}>
                                     <AlloyFinger
@@ -117,7 +100,7 @@ class ImageView extends Component {
                                         padding:5,
                                         borderRadius:5,
                                         opacity: 0.6
-                                    }}>{cleanData}
+                                    }}>{labelsData? labelsData:null}
                                     </div>
                                 </li>
                             )
